@@ -1,4 +1,4 @@
-package org.acme.week.first.day.second;
+package org.acme.week.first.day.second.controller;
 
 
 import jakarta.inject.Inject;
@@ -9,7 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 import org.acme.week.first.day.second.service.ProductCatalogService;
 
 @Path("/products")
-public class ProductCatalogResource {
+public class ProductCatalogController {
 
     @Inject
     ProductCatalogService productCatalogService;

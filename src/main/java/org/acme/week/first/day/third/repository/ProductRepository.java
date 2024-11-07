@@ -1,7 +1,7 @@
 package org.acme.week.first.day.third.repository;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.acme.week.first.day.third.aggregate.entity.Product;
+import org.acme.week.first.day.third.entity.Product;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,5 +33,6 @@ public class ProductRepository {
         Product removed = products.remove(productId);
         return removed != null;
     }
+
 }
 

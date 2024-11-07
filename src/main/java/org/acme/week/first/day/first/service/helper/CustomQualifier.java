@@ -1,4 +1,4 @@
-package org.acme.week.first.day.first.service.interfaces;
+package org.acme.week.first.day.first.service.helper;
 
 import jakarta.inject.Qualifier;
 

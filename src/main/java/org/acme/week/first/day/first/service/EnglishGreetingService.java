@@ -1,10 +1,8 @@
 package org.acme.week.first.day.first.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.acme.week.first.day.first.service.interfaces.CustomQualifier;
 import org.acme.week.first.day.first.service.interfaces.GreetingService;
 
-@CustomQualifier("english")
 @ApplicationScoped
 public class EnglishGreetingService implements GreetingService {
     @Override

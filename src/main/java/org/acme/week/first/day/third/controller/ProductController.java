@@ -1,42 +1,41 @@
-package org.acme.week.first.day.third;
+package org.acme.week.first.day.third.controller;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.acme.week.first.day.third.aggregate.entity.Product;
-import org.acme.week.first.day.third.aggregate.entity.dto.ProductDTO;
+import org.acme.week.first.day.third.model.ProductRequestDTO;
+import org.acme.week.first.day.third.model.ProductResponseDTO;
 import org.acme.week.first.day.third.service.ProductService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Path("/api/products")
-public class ProductResource {
+@Produces(MediaType.TEXT_PLAIN)
+@Consumes(MediaType.APPLICATION_JSON)
+public class ProductController {
     @Inject
     ProductService productService;
 
     @GET
     @Path("/findBy/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response findById(@PathParam("id") Long id) {
-        Product byId = productService.findById(id);
+        ProductResponseDTO byId = productService.findById(id);
         return Response.ok(byId).build();
     }
 
     @GET
     @Path("/findAll")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
-        ArrayList<ProductDTO> all = productService.findAll();
+        ArrayList<ProductResponseDTO> all = productService.findAll();
         return Response.ok(all).build();
     }
 
     @POST
     @Path("/save")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response save(ProductDTO productDTO) {
-        Product savedProduct = productService.save(productDTO);
+    public Response save(ProductRequestDTO productRequestDTO) {
+        ProductResponseDTO savedProduct = productService.save(productRequestDTO);
         if (savedProduct == null) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Product not saved").build();
         }
@@ -46,16 +45,13 @@ public class ProductResource {
 
     @PUT
     @Path("/update")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response update(ProductDTO product) {
-        ProductDTO update = productService.update(product);
+    public Response update(ProductRequestDTO product) {
+        ProductResponseDTO update = productService.update(product);
         return Response.ok(update).build();
     }
 
     @DELETE
     @Path("/delete")
-    @Produces(MediaType.TEXT_PLAIN)
     public Response delete(@QueryParam("byId") Long productId) {
         boolean deleted = productService.delete(productId);
         if (deleted) {
@@ -66,4 +62,13 @@ public class ProductResource {
                     .build();
         }
     }
+
+    @POST
+    @Path("/order")
+    public Response makeOrder(List<ProductRequestDTO> products) {
+        List<ProductResponseDTO> orderedProducts = productService.makeOrder(products);
+        return Response.ok(orderedProducts).build();
+    }
+
+
 }
